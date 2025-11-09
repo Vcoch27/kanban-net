@@ -23,6 +23,9 @@ public class Router {
                 case "PING" -> Jsons.ok(corr, Jsons.obj()).toString();
                 case "CREATE_BOARD" -> onCreateBoard(corr, data);
                 case "SUBSCRIBE_BOARD" -> onSubscribeBoard(sess, corr, data);
+                case "CREATE_LIST" -> onCreateList(corr, data);
+                case "CREATE_CARD" -> onCreateCard(corr, data);
+                case "MOVE_CARD" -> onMoveCard(corr, data);
                 default -> Jsons.err(corr,"E_INVALID","unknown type").toString();
             };
         } catch (Exception e){
@@ -59,4 +62,55 @@ public class Router {
         var resp = Jsons.ok(corr, snap).toString();
         return resp;
     }
+    private String onCreateList(String corr, JsonObject data) {
+        long boardId = data.get("board_id").getAsLong();
+        String name = data.get("name").getAsString();
+        int pos = data.has("position") ? data.get("position").getAsInt() : 0;
+        var l = store.createList(boardId, name, pos);
+
+        var listJson = Jsons.G.toJsonTree(l).getAsJsonObject();
+        var respData = Jsons.obj(); respData.add("list", listJson);
+        var resp = Jsons.ok(corr, respData).toString();
+
+        var ev = new JsonObject(); ev.addProperty("type", "EV_LIST_CREATED");
+        var evData = Jsons.obj(); evData.add("list", listJson); ev.add("data", evData);
+        hub.broadcastToBoard(boardId, ev.toString());
+        return resp;
+    }
+
+    private String onCreateCard(String corr, JsonObject data) {
+        long boardId = data.get("board_id").getAsLong();
+        long listId = data.get("list_id").getAsLong();
+        String title = data.get("title").getAsString();
+        String desc = data.has("desc") ? data.get("desc").getAsString() : "";
+        int pos = data.has("position") ? data.get("position").getAsInt() : 0;
+        var c = store.createCard(boardId, listId, title, desc, pos);
+
+        var cardJson = Jsons.G.toJsonTree(c).getAsJsonObject();
+        var respData = Jsons.obj(); respData.add("card", cardJson);
+        var resp = Jsons.ok(corr, respData).toString();
+
+        var ev = new JsonObject(); ev.addProperty("type", "EV_CARD_CREATED");
+        var evData = Jsons.obj(); evData.add("card", cardJson); ev.add("data", evData);
+        hub.broadcastToBoard(boardId, ev.toString());
+        return resp;
+    }
+
+    private String onMoveCard(String corr, JsonObject data) {
+        long cardId = data.get("card_id").getAsLong();
+        long toListId = data.get("to_list_id").getAsLong();
+        int pos = data.has("to_position") ? data.get("to_position").getAsInt() : 0;
+        var c = store.moveCard(cardId, toListId, pos);
+        if (c == null) return Jsons.err(corr, "E_NOT_FOUND", "card not found").toString();
+
+        var cardJson = Jsons.G.toJsonTree(c).getAsJsonObject();
+        var respData = Jsons.obj(); respData.add("card", cardJson);
+        var resp = Jsons.ok(corr, respData).toString();
+
+        var ev = new JsonObject(); ev.addProperty("type", "EV_CARD_MOVED");
+        var evData = Jsons.obj(); evData.add("card", cardJson); ev.add("data", evData);
+        hub.broadcastToBoard(c.board_id, ev.toString());
+        return resp;
+    }
+
 }

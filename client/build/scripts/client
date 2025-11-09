@@ -213,7 +213,7 @@ DEFAULT_JVM_OPTS='"-Xmx256m"'
 
 set -- \
         -classpath "$CLASSPATH" \
-        vn.vku.kanban.client.Main \
+        vn.vku.kanban.client.App \
         "$@"
 
 # Stop when "xargs" is not available.

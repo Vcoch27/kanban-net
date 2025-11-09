@@ -74,7 +74,7 @@ set CLASSPATH=%APP_HOME%\lib\client-0.1.0.jar;%APP_HOME%\lib\gson-2.11.0.jar;%AP
 
 
 @rem Execute client
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %CLIENT_OPTS%  -classpath "%CLASSPATH%" vn.vku.kanban.client.Main %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %CLIENT_OPTS%  -classpath "%CLASSPATH%" vn.vku.kanban.client.App %*
 
 :end
 @rem End local scope for the variables with windows NT shell

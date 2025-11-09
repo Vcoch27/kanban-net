@@ -10,8 +10,9 @@ dependencies {
 }
 
 application {
-    mainClass = 'vn.vku.kanban.client.Main'
+    mainClass = 'vn.vku.kanban.client.App'
     applicationDefaultJvmArgs = ['-Xmx256m']
+
 }
 
 javafx {

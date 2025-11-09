@@ -53,8 +53,10 @@ public class App extends Application {
         btnSend.setOnAction(e -> {
             if (net == null) return;
             JsonObject msg = new JsonObject();
-            msg.addProperty("type", "PING");
-            msg.addProperty("msg", "hello");
+            msg.addProperty("type", "SUBSCRIBE_BOARD");
+            var data = new com.google.gson.JsonObject();
+            data.addProperty("board_id", 1);
+            msg.add("data", data);
             new Thread(() -> {
                 try {
                     String resp = net.sendAndRecv(msg);
