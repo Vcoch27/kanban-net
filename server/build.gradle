@@ -1,0 +1,12 @@
+plugins {
+    id 'application'
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.11.0' // cho JSON sau này
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.3'
+}
+
+application {
+    mainClass = 'vn.vku.kanban.server.Main'
+}

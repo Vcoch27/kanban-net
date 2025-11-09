@@ -1,0 +1,13 @@
+plugins {
+    id 'application'
+}
+
+dependencies {
+    // JavaFX sẽ thêm ở STEP 4; giờ để compile đơn giản
+    implementation 'com.google.code.gson:gson:2.11.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.3'
+}
+
+application {
+    mainClass = 'vn.vku.kanban.client.Main'
+}

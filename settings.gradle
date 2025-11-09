@@ -1,0 +1,3 @@
+rootProject.name = 'kanban-net'
+include 'server'
+include 'client'
