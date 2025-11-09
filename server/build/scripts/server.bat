@@ -70,7 +70,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\server-0.1.0.jar;%APP_HOME%\lib\gson-2.11.0.jar;%APP_HOME%\lib\error_prone_annotations-2.27.0.jar
+set CLASSPATH=%APP_HOME%\lib\server-0.1.0.jar;%APP_HOME%\lib\gson-2.11.0.jar;%APP_HOME%\lib\mysql-connector-j-8.4.0.jar;%APP_HOME%\lib\error_prone_annotations-2.27.0.jar;%APP_HOME%\lib\protobuf-java-3.25.1.jar
 
 
 @rem Execute server

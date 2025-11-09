@@ -37,15 +37,22 @@ public class Router {
         var name = data.has("name")? data.get("name").getAsString() : "Untitled";
         Board b = store.createBoard(name);
 
+        try {
+            vn.vku.kanban.server.db.DB.insertBoard(name);
+        } catch (Exception e) {
+            TcpServer.log("DB_ERR", "onCreateBoard failed: " + e.getMessage());
+        }
+
         var boardJson = Jsons.G.toJsonTree(b).getAsJsonObject();
-        // Response
         var respData = Jsons.obj(); respData.add("board", boardJson);
         var resp = Jsons.ok(corr, respData).toString();
-        // Event broadcast
-        var ev = new JsonObject(); ev.addProperty("type","EV_BOARD_CREATED");
-        var evData = Jsons.obj(); evData.add("board", boardJson); ev.add("data", evData);
-        var evStr = ev.toString();
-        hub.broadcastToBoard(b.id, evStr); // ai đã subscribe board này sẽ nhận
+
+        var ev = new JsonObject();
+        ev.addProperty("type","EV_BOARD_CREATED");
+        var evData = Jsons.obj();
+        evData.add("board", boardJson);
+        ev.add("data", evData);
+        hub.broadcastToBoard(b.id, ev.toString());
 
         return resp;
     }
