@@ -115,7 +115,7 @@ case "$( uname )" in                #(
   NONSTOP* )        nonstop=true ;;
 esac
 
-CLASSPATH=$APP_HOME/lib/client-0.1.0.jar:$APP_HOME/lib/gson-2.11.0.jar:$APP_HOME/lib/error_prone_annotations-2.27.0.jar
+CLASSPATH=$APP_HOME/lib/client-0.1.0.jar:$APP_HOME/lib/gson-2.11.0.jar:$APP_HOME/lib/javafx-fxml-21-win.jar:$APP_HOME/lib/javafx-controls-21-win.jar:$APP_HOME/lib/error_prone_annotations-2.27.0.jar:$APP_HOME/lib/javafx-graphics-21-win.jar:$APP_HOME/lib/javafx-base-21-win.jar
 
 
 # Determine the Java command to use to start the JVM.
@@ -203,7 +203,7 @@ fi
 
 
 # Add default JVM options here. You can also use JAVA_OPTS and CLIENT_OPTS to pass JVM options to this script.
-DEFAULT_JVM_OPTS=""
+DEFAULT_JVM_OPTS='"-Xmx256m"'
 
 # Collect all arguments for the java command:
 #   * DEFAULT_JVM_OPTS, JAVA_OPTS, JAVA_OPTS, and optsEnvironmentVar are not allowed to contain shell fragments,

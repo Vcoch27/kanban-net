@@ -1,5 +1,6 @@
 plugins {
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 dependencies {
@@ -10,4 +11,10 @@ dependencies {
 
 application {
     mainClass = 'vn.vku.kanban.client.Main'
+    applicationDefaultJvmArgs = ['-Xmx256m']
+}
+
+javafx {
+    version = '21'
+    modules = ['javafx.controls', 'javafx.fxml']
 }
